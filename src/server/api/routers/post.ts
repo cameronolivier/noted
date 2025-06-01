@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { posts } from "~/server/db/schema";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -14,17 +13,21 @@ export const postRouter = createTRPCRouter({
 
   create: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      await ctx.db.insert(posts).values({
+    .mutation(async ({ input }) => {
+      console.log(`Mock create post with name: ${input.name}`);
+      return {
+        id: Math.floor(Math.random() * 1000),
         name: input.name,
-      });
+        createdAt: new Date(),
+      };
     }),
 
-  getLatest: publicProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.query.posts.findFirst({
-      orderBy: (posts, { desc }) => [desc(posts.createdAt)],
-    });
-
-    return post ?? null;
+  getLatest: publicProcedure.query(async () => {
+    console.log("Mock getLatest returning a sample post");
+    return {
+      id: 1,
+      name: "My Latest Mock Post from Router",
+      createdAt: new Date(),
+    };
   }),
 });
