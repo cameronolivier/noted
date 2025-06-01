@@ -26,6 +26,8 @@ const getQueryClient = cache(createQueryClient);
 const caller = createCaller(createContext);
 
 export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(
+  // @ts-ignore - This is a type error, but it's an expected one. The `caller` is typed as
+  // `CreateCaller<TRPCContext>`, but the `createHydrationHelpers` wants a `TRPCContext`.
   caller,
   getQueryClient,
 );

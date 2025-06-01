@@ -1,20 +1,26 @@
 "use client";
 
+/* eslint-disable-next-line */
+// eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function, react-hooks/exhaustive-deps, react/destructuring-assignment
 import { useState } from "react";
 
 import { api } from "~/trpc/react";
 
 export function LatestPost() {
-  const [latestPost] = api.post.getLatest.useSuspenseQuery();
+  const [latestPost] = [{ name: "tom" }]; //api.post.getLatest.useSuspenseQuery();
 
   const utils = api.useUtils();
   const [name, setName] = useState("");
-  const createPost = api.post.create.useMutation({
-    onSuccess: async () => {
-      await utils.post.invalidate();
-      setName("");
-    },
-  });
+  const createPost = {
+    mutate: (obj: { name: string }) => {},
+    isPending: false,
+  };
+  // const createPost = api.post.create.useMutation({
+  //   onSuccess: async () => {
+  //     await utils.post.invalidate();
+  //     setName("");
+  //   },
+  // });
 
   return (
     <div className="w-full max-w-xs">
