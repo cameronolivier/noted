@@ -68,6 +68,14 @@
     "initVersion": "7.39.3"
   },
   "packageManager": "pnpm@10.11.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@tailwindcss/oxide",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mdx}": "prettier --write"
   }
