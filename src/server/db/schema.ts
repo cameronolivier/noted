@@ -1,5 +1,3 @@
-// schema.ts
-// db/schema.ts
 import { relations, sql } from "drizzle-orm"; // Added sql for default functions like now()
 import {
   index,
@@ -76,7 +74,7 @@ export const notes = createTable(
     userIdx: index("notes_user_idx").on(n.userId),
     titleIdx: index("notes_title_idx").on(n.title), // Indexing titles can be useful for search
   }),
-);
+).enableRLS();
 
 export const tags = createTable(
   "tags",
@@ -96,7 +94,7 @@ export const tags = createTable(
       t.userId,
     ),
   }),
-);
+).enableRLS();
 
 export const noteTags = createTable(
   "note_tags",
@@ -112,7 +110,7 @@ export const noteTags = createTable(
     // Defines a composite primary key using both noteId and tagId
     pk: primaryKey({ columns: [nt.noteId, nt.tagId] }),
   }),
-);
+).enableRLS();
 
 /* ─── relations helpers ──────────────────────────────────────────────────── */
 // Defines how 'notes' relate to 'noteTags' (one note can have many noteTags entries)
