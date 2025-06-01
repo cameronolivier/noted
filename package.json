@@ -17,7 +17,10 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "git:pre-commit": "lint-staged",
+    "git:pre-push": "pnpm typecheck && pnpm lint && pnpm format:check",
+    "prepare": "husky"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.8",
@@ -51,6 +54,8 @@
     "eslint": "^9.28.0",
     "eslint-config-next": "^15.3.3",
     "eslint-plugin-drizzle": "^0.2.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
     "postcss": "^8.5.4",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
@@ -62,5 +67,8 @@
   "ct3aMetadata": {
     "initVersion": "7.39.3"
   },
-  "packageManager": "pnpm@10.11.0"
+  "packageManager": "pnpm@10.11.0",
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mdx}": "prettier --write"
+  }
 }
